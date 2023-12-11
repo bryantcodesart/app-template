@@ -42,3 +42,6 @@ Thumbs.db
 
 # Next.js
 .next
+
+# Bryant likes to store junk in junk folders
+junk/
