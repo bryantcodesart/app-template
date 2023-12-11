@@ -45,3 +45,6 @@ Thumbs.db
 
 # Bryant likes to store junk in junk folders
 junk/
+
+# Env
+.env.local

@@ -4,10 +4,31 @@
   "sourceRoot": "apps/api/src",
   "projectType": "application",
   "targets": {
+    "payload:config": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/payload",
+        "format": ["cjs"],
+        "bundle": true,
+        "main": "apps/api/payload.config.ts",
+        "tsConfig": "apps/api/tsconfig.app.json",
+        "generateLockfile": true,
+        "esbuildOptions": {
+          "sourcemap": false,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      }
+    },
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
+      "dependsOn": ["payload:config", "payload:build"],
       "options": {
         "platform": "node",
         "outputPath": "dist/apps/api",
@@ -15,7 +36,14 @@
         "bundle": false,
         "main": "apps/api/src/main.ts",
         "tsConfig": "apps/api/tsconfig.app.json",
-        "assets": ["apps/api/src/assets"],
+        "assets": [
+          "apps/api/src/assets",
+          {
+            "input": "apps/api",
+            "glob": ".env",
+            "output": "."
+          }
+        ],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -61,6 +89,34 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/api/jest.config.ts"
+      }
+    },
+    "payload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx payload",
+        "cwd": "apps/api"
+      }
+    },
+    "payload:migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx payload migrate",
+        "cwd": "apps/api"
+      }
+    },
+    "payload:build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx payload build",
+        "cwd": "apps/api"
+      }
+    },
+    "payload:types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx payload generate:types && npx payload generate:graphQLSchema",
+        "cwd": "apps/api"
       }
     },
     "docker-build": {

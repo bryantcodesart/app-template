@@ -1,14 +1,23 @@
 import express from 'express';
+import payload from 'payload';
+// import './payload.config';
+import ENV from './env';
 
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const start = async () => {
+  const app = express();
 
-const app = express();
+  await payload.init({
+    secret: ENV.PAYLOAD_SECRET,
+    express: app,
+  });
 
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello API' });
-});
+  app.get('/', (req, res) => {
+    res.send({ message: 'Hello API' });
+  });
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+  app.listen(ENV.PORT, ENV.HOST, () => {
+    console.log(`[ ready ] http://${ENV.HOST}:${ENV.PORT}`);
+  });
+};
+
+start();
