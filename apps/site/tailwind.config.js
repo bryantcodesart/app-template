@@ -50,8 +50,8 @@ module.exports = {
  * @typedef {'copy' | 'display' | 'monos'} FontStackKeys
  */
 const fontStacks = {
-  copy: ['Helvetica', 'Arial', 'sans-serif'],
-  display: ['Georgia', 'Times', 'serif'],
+  copy: ['Super Expensive Boutique Font', 'Helvetica', 'Arial', 'sans-serif'],
+  display: ['Another Expensive Boutique Font', 'Georgia', 'Times', 'serif'],
   monos: ['Menlo', 'Monaco', 'Consolas', 'monospace'],
 };
 
@@ -68,6 +68,7 @@ const fontStacks = {
  * @returns {Object} The type style object.
  */
 function createTypeStyle({
+  // Match these to how your designer thinks about type--and edit the logic below to match.
   sizeInPx,
   stack: stackName = 'copy',
   lineHeightInPx,
@@ -85,9 +86,9 @@ function createTypeStyle({
   if (!stack) throw new Error(`No font font stack found for ${stack}`);
   const fontFamily = stack.join(', ');
 
-  // Do some logic here if you want based off the provided options.
+  // Do some logic here, if you want, based off the provided options.
   // E.g. I had a client with broken declarations such that, for that font, the weight was always 400--even for bold.
-  // Or maybe one font is ALWAYS uppercase.
+  // Or maybe one font is ALWAYS uppercase or has smoothing or ligature specifications etc.
 
   return {
     'font-size': `${remFontSize}rem`,
