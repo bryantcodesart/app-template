@@ -86,6 +86,12 @@
         "cwd": "apps/api"
       }
     },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run api:generate:types && nx run api:generate:graphQLSchema"
+      }
+    },
     "payload": {
       "executor": "nx:run-commands",
       "options": {
