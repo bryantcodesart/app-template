@@ -4,7 +4,21 @@
   "sourceRoot": "apps/api/src",
   "projectType": "application",
   "targets": {
-    "build": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx build api --watch"
+          },
+          {
+            "command": "nodemon dist/apps/api/main.js"
+          }
+        ],
+        "parallel": true
+      }
+    },
+    "build:server": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
@@ -15,14 +29,7 @@
         "bundle": false,
         "main": "apps/api/src/main.ts",
         "tsConfig": "apps/api/tsconfig.app.json",
-        "assets": [
-          "apps/api/src/assets",
-          {
-            "input": "apps/api",
-            "glob": ".env",
-            "output": "."
-          }
-        ],
+        "assets": ["apps/api/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -34,7 +41,6 @@
       "configurations": {
         "development": {},
         "production": {
-          "generateLockfile": true,
           "esbuildOptions": {
             "sourcemap": false,
             "outExtension": {
@@ -42,6 +48,13 @@
             }
           }
         }
+      }
+    },
+
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run api:build:server"
       }
     },
     "serve": {
@@ -57,6 +70,27 @@
         "production": {
           "buildTarget": "api:build:production"
         }
+      }
+    },
+    "generate:types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
+        "cwd": "apps/api"
+      }
+    },
+    "generate:graphQLSchema": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema",
+        "cwd": "apps/api"
+      }
+    },
+    "payload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
+        "cwd": "apps/api"
       }
     },
     "lint": {

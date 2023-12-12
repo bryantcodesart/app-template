@@ -1,23 +1,28 @@
 import express from 'express';
 import payload from 'payload';
-// import './payload.config';
-import ENV from './env';
+import { config } from 'dotenv';
+config();
+
+const app = express();
+
+// Redirect root to Admin panel
+app.get('/', (_, res) => {
+  res.redirect('/admin');
+});
 
 const start = async () => {
-  const app = express();
-
+  // Initialize Payload
   await payload.init({
-    secret: ENV.PAYLOAD_SECRET,
+    secret: process.env.PAYLOAD_SECRET,
     express: app,
+    onInit: async () => {
+      payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
+    },
   });
 
-  app.get('/', (req, res) => {
-    res.send({ message: 'Hello API' });
-  });
+  // Add your own express routes here
 
-  app.listen(ENV.PORT, ENV.HOST, () => {
-    console.log(`[ ready ] http://${ENV.HOST}:${ENV.PORT}`);
-  });
+  app.listen(3000);
 };
 
 start();
