@@ -35,10 +35,10 @@ module.exports = {
     plugin(({ addComponents }) => {
       addComponents({
         '.type-headline-mobile': createTypeStyle({
-          stack: 'helvetica',
+          stack: 'display',
           sizeInPx: 64,
           lineHeightInPx: 52,
-          fontWeight: 700,
+          weight: 700,
           letterSpacingInPx: 0.8,
         }),
       });
@@ -47,12 +47,12 @@ module.exports = {
 };
 
 /**
- * @typedef {'copy' | 'display' | 'monos'} FontStackKeys
+ * @typedef {'copy' | 'display' | 'mono'} FontStackKeys
  */
 const fontStacks = {
   copy: ['Super Expensive Boutique Font', 'Helvetica', 'Arial', 'sans-serif'],
   display: ['Another Expensive Boutique Font', 'Georgia', 'Times', 'serif'],
-  monos: ['Menlo', 'Monaco', 'Consolas', 'monospace'],
+  mono: ['Menlo', 'Monaco', 'Consolas', 'monospace'],
 };
 
 /**
@@ -62,9 +62,9 @@ const fontStacks = {
  * @param {number} options.fontSizeInPx - The font size in pixels.
  * @param {FontStackKeys} options.fontStack - The font stack.
  * @param {number} options.lineHeightInPx - The line height in pixels.
- * @param {number} options.fontWeight - The font weight.
+ * @param {number} options.weight - The font weight.
  * @param {number} options.letterSpacingInPx - The letter spacing in pixels.
- * @param {string} [options.textTransform="none"] - The text transform.
+ * @param {string} [options.transform="none"] - The text transform.
  * @returns {Object} The type style object.
  */
 function createTypeStyle({
@@ -72,9 +72,9 @@ function createTypeStyle({
   sizeInPx,
   stack: stackName = 'copy',
   lineHeightInPx,
-  fontWeight = 400,
+  weight = 400,
   letterSpacingInPx = 0,
-  textTransform = 'none',
+  transform = 'none',
 }) {
   const oneRemInPx = 16;
   const remFontSize = sizeInPx / oneRemInPx;
@@ -94,9 +94,9 @@ function createTypeStyle({
     'font-size': `${remFontSize}rem`,
     'font-family': fontFamily,
     'line-height': unitlessLineHeight,
-    'font-weight': fontWeight,
+    'font-weight': weight,
     'letter-spacing': `${emLetterSpacing}em`,
-    'text-transform': textTransform === 'uppercase' ? 'uppercase' : 'none',
+    'text-transform': transform === 'uppercase' ? 'uppercase' : 'none',
     '--line-height': `${remLineHeight}rem`,
   };
 }
