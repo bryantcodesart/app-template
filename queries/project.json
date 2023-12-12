@@ -1,0 +1,57 @@
+{
+  "name": "queries",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "queries/src",
+  "projectType": "library",
+  "targets": {
+    "build:payload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config ./src/graphql-codegen/payload/codegen.ts"
+        ],
+        "cwd": "queries"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run queries:build:payload"
+        ],
+        "parallel": true
+      }
+    },
+
+    "dev:payload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "graphql-codegen --config ./src/graphql-codegen/payload/codegen.ts --watch"
+        ],
+        "cwd": "queries"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run queries:dev:payload"
+        ],
+        "parallel": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "queries/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

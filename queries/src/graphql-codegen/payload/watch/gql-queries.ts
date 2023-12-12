@@ -1,0 +1,29 @@
+import { request } from 'graphql-request';
+import { graphql } from '../__generated__';
+import { PAYLOAD_API_ENDPOINT } from '../PAYLOAD_API_ENDPOINT';
+
+interface BlogArticleListing {
+  title: string;
+  excerpt: string;
+}
+export async function getBlogListing(): Promise<BlogArticleListing[]> {
+  // const GetBlogListingQuery = ;
+  const result = await request(
+    PAYLOAD_API_ENDPOINT,
+    graphql(/* GraphQL */ `
+      query GetBlogListing {
+        Blogs {
+          docs {
+            title
+            excerpt
+          }
+        }
+      }
+    `)
+  );
+  const reshaped = result.Blogs.docs.map(({ title, excerpt }) => ({
+    title,
+    excerpt,
+  }));
+  return reshaped;
+}

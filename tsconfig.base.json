@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@mono/payload": ["payload/src/index.ts"]
+      "@mono/payload": ["payload/src/index.ts"],
+      "@mono/queries": ["queries/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
