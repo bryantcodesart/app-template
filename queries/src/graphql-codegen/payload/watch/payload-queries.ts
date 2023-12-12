@@ -3,6 +3,7 @@ import { graphql } from '../__generated__';
 import { PAYLOAD_API_ENDPOINT } from '../PAYLOAD_API_ENDPOINT';
 
 interface BlogArticleListing {
+  id: string;
   title: string;
   excerpt: string;
 }
@@ -14,6 +15,7 @@ export async function getBlogListing(): Promise<BlogArticleListing[]> {
       query GetBlogListing {
         Blogs {
           docs {
+            id
             title
             excerpt
           }
@@ -21,7 +23,8 @@ export async function getBlogListing(): Promise<BlogArticleListing[]> {
       }
     `)
   );
-  const reshaped = result.Blogs.docs.map(({ title, excerpt }) => ({
+  const reshaped = result.Blogs.docs.map(({ id, title, excerpt }) => ({
+    id: id.toString(),
     title,
     excerpt,
   }));

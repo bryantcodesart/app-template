@@ -1879,7 +1879,7 @@ export type UsersResetPassword = {
 export type GetBlogListingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBlogListingQuery = { __typename?: 'Query', Blogs?: { __typename?: 'Blogs', docs?: Array<{ __typename?: 'Blog', title: string, excerpt?: string | null } | null> | null } | null };
+export type GetBlogListingQuery = { __typename?: 'Query', Blogs?: { __typename?: 'Blogs', docs?: Array<{ __typename?: 'Blog', id?: number | null, title: string, excerpt?: string | null } | null> | null } | null };
 
 
-export const GetBlogListingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBlogListing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Blogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}}]}}]}}]}}]} as unknown as DocumentNode<GetBlogListingQuery, GetBlogListingQueryVariables>;
+export const GetBlogListingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBlogListing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Blogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}}]}}]}}]}}]} as unknown as DocumentNode<GetBlogListingQuery, GetBlogListingQueryVariables>;

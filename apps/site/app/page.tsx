@@ -6,7 +6,7 @@ export default async function Index() {
   return (
     <ul>
       {blogArticles.map((article) => (
-        <li key={article.title}>
+        <li key={article.id}>
           <h2>{article.title}</h2>
           <p>{article.excerpt}</p>
         </li>
